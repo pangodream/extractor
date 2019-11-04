@@ -1,0 +1,22 @@
+{
+    "name": "pangodream/extractor",
+    "description": "HTML entities extractor for spanish webs scraping",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pangodream",
+            "email": "alberto.iriberri@pangodream.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "Extractor": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "html2text/html2text": "^4.2"
+    }
+}
