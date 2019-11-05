@@ -64,7 +64,7 @@ class Extractor
         $result['email'] = self::getEmails($txt);
         $result['telf'] = self::getTelf($txt);
         $result['ecommerce'] = self::isShop($html);
-        $result['carrito'] = self::hasCarrito($html);
+        $result['carrito'] = self::hasCarrito($html, $txt);
         $result['parking'] = self::extractParking($html);
         $result['responsive'] = self::calculateResponsive($html);
         return $result;
@@ -133,11 +133,15 @@ class Extractor
         }
         return $shop;
     }
-    private static function hasCarrito($html){
-        $hasCarrito = false;
+    private static function hasCarrito($html, $txt){
+        $hasCarrito = 0;
         $lHtml = strtolower($html);
+        $lTxt = strtolower($txt);
         if(substr_count($lHtml, "carrito")>0){
-            $hasCarrito = true;
+            $hasCarrito = 1;
+        }
+        if(substr_count($lTxt, "carrito")>0){
+            $hasCarrito = 2;
         }
         return $hasCarrito;
     }
