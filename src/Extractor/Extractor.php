@@ -109,6 +109,12 @@ class Extractor
         }
         return $candidato;
     }
+    private function getTelfR($text){
+        $text = $text.' ';
+        $re = "@[\-,\.,\ ]{1}[\+]{0,1}(34){0,1}[\-,\.,\ ]{0,1}[9,6,7]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{1}@";
+        preg_match_all($re, $text, $tels);
+        var_dump($tels);
+    }
     private static function isShop($html){
         $shop = "No";
         $lHtml = strtolower($html);
