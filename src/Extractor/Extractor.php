@@ -109,7 +109,7 @@ class Extractor
         }
         return $candidato;
     }
-    private function getTelfR($text){
+    private static function getTelfR($text){
         $ret = "";
         $text = str_replace("\n"," ", $text);
         $text = $text.' ';
