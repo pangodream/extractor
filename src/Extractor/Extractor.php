@@ -62,7 +62,7 @@ class Extractor
 
         $result['keywords'] = self::getWords($txt);
         $result['email'] = self::getEmails($txt);
-        $result['telf'] = self::getTelf($txt);
+        $result['telf'] = self::getTelfR($txt);
         $result['ecommerce'] = self::isShop($html);
         $result['carrito'] = self::hasCarrito($html, $txt);
         $result['parking'] = self::extractParking($html);
@@ -110,10 +110,25 @@ class Extractor
         return $candidato;
     }
     private function getTelfR($text){
+        $ret = "";
+        $text = str_replace("\n"," ", $text);
         $text = $text.' ';
-        $re = "@[\-,\.,\ ]{1}[\+]{0,1}(34){0,1}[\-,\.,\ ]{0,1}[9,6,7]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{1}@";
+        $re = "@[\:\>\-,\.,\ ]{1}[\+]{0,1}(34){0,1}[\-,\.,\ ]{0,1}[9,6,7]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\-,\.,\ ]{0,1}[0-9]{1}[\<\-,\.,\ ]{1}@m";
         preg_match_all($re, $text, $tels);
-        var_dump($tels);
+        $tels = $tels[0];
+        foreach($tels as $key=>$tel){
+            $teld=str_replace(" ","", $tel);
+            $teld=str_replace("+34","", $teld);
+            $teld=str_replace(":","", $teld);
+            $teld=str_replace("<","", $teld);
+            $teld=str_replace(">","", $teld);
+            $tels[$key]=$teld;
+        }
+        //var_dump($tels);
+        if(isset($tels[0])){
+            $ret = $tels[0];
+        }
+        return $ret;
     }
     private static function isShop($html){
         $shop = "No";
