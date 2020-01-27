@@ -117,16 +117,22 @@ class Extractor
         preg_match_all($re, $text, $tels);
         $tels = $tels[0];
         foreach($tels as $key=>$tel){
-            $teld=str_replace(" ","", $tel);
-            $teld=str_replace("+34","", $teld);
-            $teld=str_replace(":","", $teld);
-            $teld=str_replace("<","", $teld);
-            $teld=str_replace(">","", $teld);
+            $teld=str_replace("+34","", $tel);
+            $teld=self::onlyNumbers($teld);
             $tels[$key]=$teld;
         }
-        //var_dump($tels);
         if(isset($tels[0])){
             $ret = $tels[0];
+        }
+        return $ret;
+    }
+    private static function onlyNumbers($text){
+        $ret = '';
+        for($i=0;$i<strlen($text);$i++){
+            $l = substr($text, $i, 1);
+            if($l >= '0' and $l <= '9'){
+                $ret .= $l;
+            }
         }
         return $ret;
     }
